@@ -5,7 +5,7 @@
 package Pod::PseudoPod::Checker;
 use strict;
 use vars qw( $VERSION );
-$VERSION = '0.09';
+$VERSION = '0.11';
 use Carp ();
 use base qw( Pod::PseudoPod );
 BEGIN { *DEBUG = defined(&Pod::PseudoPod::DEBUG)
@@ -121,6 +121,12 @@ sub end_Verbatim  {
   ;
   $self->{'scratch'} = '';
   return;
+}
+
+sub end_Document   {
+  my ($self) = @_;
+  return if $self->{'Errata_seen'};
+  print { $self->{'output_fh'} } "\tNo errors seen!\n";
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

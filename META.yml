@@ -1,32 +1,32 @@
 --- #YAML:1.0
 name: Pod-PseudoPod
-version: 0.10
+version: 0.11
 author:
   - Allison Randal (allison@perl.org)
 abstract: A framework for parsing O'Reilly's PseudoPod
 license: perl
 requires:
-  Pod::Simple: 2.05
+  Pod::Simple: 3.02
   Text::Wrap: 98.112902
 provides:
   Pod::PseudoPod:
     file: lib/Pod/PseudoPod.pm
-    version: 0.10
+    version: 0.11
   Pod::PseudoPod::Checker:
     file: lib/Pod/PseudoPod/Checker.pm
-    version: 0.09
+    version: 0.11
   Pod::PseudoPod::DumpAsXML:
     file: lib/Pod/PseudoPod/DumpAsXML.pm
     version: 1.01
   Pod::PseudoPod::HTML:
     file: lib/Pod/PseudoPod/HTML.pm
-    version: 0.09
+    version: 0.11
   Pod::PseudoPod::Index:
     file: lib/Pod/PseudoPod/Index.pm
-    version: 0.09
+    version: 0.11
   Pod::PseudoPod::Text:
     file: lib/Pod/PseudoPod/Text.pm
-    version: 0.09
+    version: 0.11
   Pod::PseudoPod::XMLOutStream:
     file: lib/Pod/PseudoPod/XMLOutStream.pm
     version: 1.02
