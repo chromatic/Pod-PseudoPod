@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Pod-PseudoPod
-version: 0.09
+version: 0.10
 author:
   - Allison Randal (allison@perl.org)
 abstract: A framework for parsing O'Reilly's PseudoPod
@@ -11,7 +11,7 @@ requires:
 provides:
   Pod::PseudoPod:
     file: lib/Pod/PseudoPod.pm
-    version: 0.09
+    version: 0.10
   Pod::PseudoPod::Checker:
     file: lib/Pod/PseudoPod/Checker.pm
     version: 0.09
