@@ -1,0 +1,22 @@
+DESCRIPTION
+    PseudoPOD is O'Reilly's extended set of POD tags for book manuscripts.
+    Standard POD doesn't have all the markup options you might want for
+    marking up files for publishing production. PseudoPOD adds a few extra
+    tags for footnotes and tables, and has extended uses of "=begin" 
+    elements.
+
+INSTALLATION
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+EXTRAS
+    The "examples/" directory includes a pod2html converter and a
+    podchecker script that aren't in the standard installation.
+
+      ./pod2html filename.pod
+
+    If you also copy the sample style.css into the same directory as
+    the html files you generate, the output is a tolerable simulation
+    of O'Reilly's animal book format.
