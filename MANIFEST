@@ -1,16 +1,21 @@
+Build.PL
 Changes
 LICENSE
 Makefile.PL
 MANIFEST
+META.yml
 README
 Todo
-examples/podchecker
-examples/pod2html
+examples/ppodchecker
+examples/ppod2html
+examples/ppod2txt
+examples/ppodindex
 examples/style.css
 lib/Pod/PseudoPod.pm
 lib/Pod/PseudoPod/Checker.pm
 lib/Pod/PseudoPod/DumpAsXML.pm
 lib/Pod/PseudoPod/HTML.pm
+lib/Pod/PseudoPod/Index.pm
 lib/Pod/PseudoPod/Text.pm
 lib/Pod/PseudoPod/XMLOutStream.pm
 t/basic.t
@@ -19,6 +24,7 @@ t/checker.t
 t/fcodes.t
 t/for.t
 t/html.t
+t/index.t
 t/text.t
 t/table.t
 t/pod_simple/ac_c_extend.t
@@ -52,4 +58,3 @@ t/pod_simple/test_old_perlvar.pod
 t/pod_simple/test_old_perlvar_out.txt
 t/pod_simple/verbatims.t
 t/pod_simple/x_nixer.t
-META.yml                                 Module meta-data (added by MakeMaker)

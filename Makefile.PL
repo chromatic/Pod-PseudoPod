@@ -1,6 +1,13 @@
 use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
+
+# The list of tests has to be explicitly generated on Win98.
+my @tests;
+for my $dir (qw(t t/pod_simple)) {
+    opendir TESTS, $dir or die $!;
+    push @tests, map { "$dir/$_" } grep { /\.t$/ } readdir TESTS;
+    closedir TESTS;
+}
+
 WriteMakefile(
     NAME         => 'Pod::PseudoPod',
     VERSION_FROM => 'lib/Pod/PseudoPod.pm', # finds $VERSION
@@ -9,8 +16,8 @@ WriteMakefile(
         'Text::Wrap'    => 98.112902,
     },
     test =>
-        {TESTS => 't/*.t t/*/*.t'},
-    PREREQ_FATAL => 1,
+        {TESTS => "@tests"},
     AUTHOR       => 'Allison Randal (allison@perl.org)',
-    ABSTRACT     => 'a framework for parsing PseudoPod documents',
+    ABSTRACT     => "A framework for parsing O'Reilly's PseudoPod",
+    PL_FILES => {}, # ignore the Build.PL file
 );
