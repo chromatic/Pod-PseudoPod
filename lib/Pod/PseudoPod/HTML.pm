@@ -1,12 +1,13 @@
 package Pod::PseudoPod::HTML;
 use strict;
 use vars qw( $VERSION );
-$VERSION = '0.11';
+$VERSION = '0.12';
 use Carp ();
 use base qw( Pod::PseudoPod );
 
 use Text::Wrap 98.112902 ();
 $Text::Wrap::wrap = 'overflow';
+use HTML::Entities 'encode_entities';
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -16,8 +17,8 @@ sub new {
   $new->{'output_fh'} ||= *STDOUT{IO};
   $new->accept_targets( 'html', 'HTML' );
   $new->accept_targets_as_text( qw(author blockquote comment caution
-      editor epigraph example figure important note production
-      programlisting screen sidebar table tip warning) );
+      editor epigraph example figure important listing literal note
+      production programlisting screen sidebar table tip warning) );
 
   $new->nix_X_codes(1);
   $new->nbsp_for_S(1);
@@ -30,10 +31,13 @@ sub new {
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-sub handle_text { $_[0]{'scratch'} .= $_[1] }
+sub handle_text {
+    # escape special characters in HTML (<, >, &, etc)
+    $_[0]{'scratch'} .= $_[0]{'in_verbatim'} ? encode_entities( $_[1] ) : $_[1]
+}
 
 sub start_Para     { $_[0]{'scratch'} = '<p>' }
-sub start_Verbatim { $_[0]{'scratch'} = '<pre><code>' }
+sub start_Verbatim { $_[0]{'scratch'} = '<pre><code>'; $_[0]{'in_verbatim'} = 1}
 
 sub start_head0 {  $_[0]{'scratch'} = '<h1>' }
 sub start_head1 {  $_[0]{'scratch'} = '<h2>' }
@@ -58,7 +62,11 @@ sub end_over_number { $_[0]{'scratch'} .= '</ol>'; $_[0]->emit('nowrap') }
 # . . . . . Now the actual formatters:
 
 sub end_Para     { $_[0]{'scratch'} .= '</p>'; $_[0]->emit() }
-sub end_Verbatim { $_[0]{'scratch'} .= '</code></pre>'; $_[0]->emit('nowrap') }
+sub end_Verbatim {
+    $_[0]{'scratch'}     .= '</code></pre>';
+    $_[0]{'in_verbatim'}  = 0;
+    $_[0]->emit('nowrap');
+}
 
 sub end_head0       { $_[0]{'scratch'} .= '</h1>'; $_[0]->emit() }
 sub end_head1       { $_[0]{'scratch'} .= '</h2>'; $_[0]->emit() }

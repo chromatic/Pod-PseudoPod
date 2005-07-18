@@ -12,9 +12,15 @@ WriteMakefile(
     NAME         => 'Pod::PseudoPod',
     VERSION_FROM => 'lib/Pod/PseudoPod.pm', # finds $VERSION
     PREREQ_PM    => {
-        'Pod::Simple'   => 3.02,
-        'Text::Wrap'    => 98.112902,
+        'Pod::Simple'    => 3.02,
+        'Text::Wrap'     => 98.112902,
+        'HTML::Entities' => 0,
+        'Test::More'     => 0,
     },
+    EXE_FILES    => [ 'bin/ppod2html',
+                      'bin/ppod2txt',
+                      'bin/ppodchecker',
+                    ],
     test =>
         {TESTS => "@tests"},
     AUTHOR       => 'Allison Randal (allison@perl.org)',
