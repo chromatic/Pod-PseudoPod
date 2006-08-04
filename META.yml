@@ -1,9 +1,9 @@
 ---
 name: Pod-PseudoPod
-version: 0.12
+version: 0.13
 author:
-  - Allison Randal (allison@perl.org)
-abstract: A framework for parsing O'Reilly's PseudoPod
+  - "Allison Randal (allison@perl.org)"
+abstract: "A framework for parsing O'Reilly's PseudoPod"
 license: perl
 requires:
   HTML::Entities: 0
@@ -11,10 +11,14 @@ requires:
   Text::Wrap: 98.112902
 build_requires:
   Test::More: 0
+generated_by: Module::Build version 0.2805
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
 provides:
   Pod::PseudoPod:
     file: lib/Pod/PseudoPod.pm
-    version: 0.12
+    version: 0.13
   Pod::PseudoPod::Checker:
     file: lib/Pod/PseudoPod/Checker.pm
     version: 0.11
@@ -33,4 +37,5 @@ provides:
   Pod::PseudoPod::XMLOutStream:
     file: lib/Pod/PseudoPod/XMLOutStream.pm
     version: 1.02
-generated_by: Module::Build version 0.2611
+resources:
+  license: http://dev.perl.org/licenses/
