@@ -19,11 +19,12 @@ WriteMakefile(
     },
     EXE_FILES    => [ 'bin/ppod2html',
                       'bin/ppod2txt',
+                      'bin/ppod2docbook',
                       'bin/ppodchecker',
                     ],
     test =>
         {TESTS => "@tests"},
     AUTHOR       => 'Allison Randal (allison@perl.org)',
-    ABSTRACT     => "A framework for parsing O'Reilly's PseudoPod",
+    ABSTRACT     => "A framework for parsing PseudoPod",
     PL_FILES => {}, # ignore the Build.PL file
 );

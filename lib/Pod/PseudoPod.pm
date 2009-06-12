@@ -11,7 +11,7 @@ use vars qw(
 );
 
 @ISA = ('Pod::Simple');
-$VERSION = '0.13';
+$VERSION = '0.15';
 
 BEGIN { *DEBUG = sub () {0} unless defined &DEBUG }
 
@@ -35,7 +35,7 @@ sub _handle_element_start {
   $element =~ tr/-:./__/;
 
   my $sub = $self->can('start_' . $element);
-  $sub->($self,$flags) if $sub; 
+  $sub->($self, $flags) if $sub; 
 }
 
 sub _handle_text {
@@ -46,11 +46,11 @@ sub _handle_text {
 }
 
 sub _handle_element_end {
-  my ($self,$element) = @_;
+  my ($self, $element, $flags) = @_;
   $element =~ tr/-:./__/;
 
   my $sub = $self->can('end_' . $element);
-  $sub->($self) if $sub;
+  $sub->($self, $flags) if $sub;
 }
 
 sub nix_Z_codes { $_[0]{'nix_Z_codes'} = $_[1] }
@@ -200,6 +200,12 @@ sub _ponder_paragraph_buffer {
       #  should be.
 
       DEBUG > 1 and print "Pondering non-magical $para_type\n";
+
+      # In tables, the start of a headrow or bodyrow also terminates an 
+      # existing open row.
+      if($para_type eq '=headrow' || $para_type eq '=bodyrows') {
+        $self->_ponder_row_end($para,$curr_open,$paras);
+      }
 
       # Enforce some =headN discipline
       if($para_type =~ m/^=head\d$/s
@@ -481,7 +487,7 @@ sub _ponder_end {
     if ($content eq 'table' or $content eq 'sidebar' or $content eq 'figure' or $content eq 'listing') {
       $self->_handle_element_end( $content );
     } else {
-      $self->_handle_element_end( 'for' );
+      $self->_handle_element_end( 'for', { 'target' => $content } );
     }
   }
   DEBUG > 1 and print "Popping $curr_open->[-1][0] $curr_open->[-1][1]{'target'} because of =end $content\n";
@@ -522,7 +528,7 @@ __END__
 
 =head1 NAME
 
-Pod::PseudoPod - A framework for parsing O'Reilly's PseudoPod
+Pod::PseudoPod - A framework for parsing PseudoPod
 
 =head1 SYNOPSIS
 
@@ -549,11 +555,10 @@ Pod::PseudoPod - A framework for parsing O'Reilly's PseudoPod
 
 =head1 DESCRIPTION
 
-PseudoPod is an extended set of Pod tags used by O'Reilly and
-Associates publishing for book manuscripts. Standard Pod doesn't have
-all the markup options you need to mark up files for publishing
-production. PseudoPod adds a few extra tags for footnotes, tables,
-sidebars, etc.
+PseudoPod is an extended set of Pod tags used for book manuscripts.
+Standard Pod doesn't have all the markup options you need to mark up
+files for publishing production. PseudoPod adds a few extra tags for
+footnotes, tables, sidebars, etc.
 
 This class adds parsing support for the PseudoPod tags. It also
 overrides Pod::Simple's C<_handle_element_start>, C<_handle_text>, and
@@ -569,7 +574,7 @@ L<Pod::Simple>, L<Pod::PseudoPod::HTML>, L<Pod::PseudoPod::Tutorial>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2003-2004 Allison Randal.  All rights reserved.
+Copyright (C) 2003-2009 Allison Randal.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license
